@@ -1,13 +1,19 @@
 {
   "name": "url-shortener",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Linkify - A simple URL shortener built with Node.js, Express and PostgreSQL",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "url-shortener",
+    "nodejs",
+    "express",
+    "postgresql"
+  ],
+  "author": "Akshaya",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {

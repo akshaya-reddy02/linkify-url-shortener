@@ -9,11 +9,10 @@ app.use(express.json());
 app.use(express.static(__dirname));
 
 const pool = new Pool({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DB_NAME,
-    password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false
+    }
 });
 
 // Serve frontend
@@ -41,9 +40,13 @@ app.post("/shorten", async (req, res) => {
             [originalUrl, shortCode]
         );
 
+        const baseUrl =
+            process.env.BASE_URL ||
+            `https://${req.get("host")}`;
+
         res.json({
             message: "URL shortened successfully",
-            shortUrl: `http://localhost:3000/${shortCode}`,
+            shortUrl: `${baseUrl}/${shortCode}`,
             data: result.rows[0]
         });
 
@@ -115,6 +118,8 @@ app.get("/:shortCode", async (req, res) => {
     }
 });
 
-app.listen(process.env.PORT, () => {
-    console.log(`Server running at http://localhost:${process.env.PORT}`);
+app.listen(process.env.PORT || 3000, () => {
+    console.log(
+        `Server running at http://localhost:${process.env.PORT || 3000}`
+    );
 });
